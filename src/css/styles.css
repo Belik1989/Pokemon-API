@@ -7,14 +7,24 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fafafa;
+  background-color: #dc2626;
   color: #212121;
   line-height: 1.5;
 }
 
 #search-box {
   font: inherit;
-  padding: 8px;
+  padding: 15px;
   max-width: 320px;
-  margin-bottom: 16px;
+  margin-bottom: 13px;
+}
+
+#search-btn{
+  padding: 15px;
+  margin-bottom: 13px;
+}
+
+.pokemon-box{
+  display: flex;
+  
 }

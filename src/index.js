@@ -1,5 +1,5 @@
 import './css/styles.css';
-import Notiflix from 'notiflix';
+import {Notiflix} from 'notiflix';
 import axios, { Axios } from 'axios';
 // import { debounce } from 'lodash.debounce';
 
@@ -7,67 +7,42 @@ import axios, { Axios } from 'axios';
 
 const input = document.querySelector('#search-box');
 const searchBtn = document.querySelector('#search-btn');
-const gallery = document.querySelector('.pokemon-info');
-// console.log(input);
-// console.log(searchBtn);
-// console.log(gallery);
-let pokedex = {};
-let searchValue = "";
+const pokemonBox = document.querySelector('.pokemon-box');
 
-input.addEventListener('submit',onPokemonSearch());
-searchBtn.addEventListener('click',onPokemonSearch);
+input.addEventListener('submit',getPokemon);
+searchBtn.addEventListener('click',getPokemon);
 
-    
-async function onPokemonSearch(){
-    const searchValue = input.value.trim()
-    const results = await getPokemon(searchValue);
-    let pokemon.id = searchValue;
-    gallery.insertAdjacentHTML('beforeend',createPokemonCard());
-    
-};
+function getPokemon(e){
+    e.preventDefault()
 
-function createPokemonCard(){
-    return    `<div class="card">
-    <div class="card-img-top">
-        <img src="" alt="${pokedex.name}">
-    </div>
-    <div class="card-body">
-        <h2 class="card-title">Ім'я: ${pokedex.name}</h2>
-        <p class="card-text">Вага: ${pokedex.weight}</p>
-        <p class="card-text">Зріст: ${pokedex.height}</p>
+    const id = input.value;
+
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+    .then((response) =>response.json()).then((data) =>{
+        pokemonBox.innerHTML = 
+        `<div class="card">
+        <div class="card-img-top">
+            <img src="${data.sprites.front_default}" alt="${data.name}">
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">Ім'я: ${data.name}</h2>
+            <p class="card-text">Вага: ${data.weight}</p>
+            <p class="card-text">Зріст: ${data.height}</p>
+            
+        </div>
+        </div>`;
+    })
+    .catch((err) =>{
+        console.log("Pokemon not found", err);
         
-        <p class="card-text">Опис: ${pokedex.desc}</p>
-        
-    </div>
-    </div>`
+    });
     
 }
 
 
-async function getPokemon(searchValue){
-    const url = "https://pokeapi.co/api/v2/pokemon/${searchValue}/";
 
-    const res = await axios.get(url);
-    const pokemon = await res.data;
-    console.log(pokemon);
-    let pokemonId = searchValue;
-    let pokemonName = pokemon["name"];
-    let pokemonWeight = pokemon["weight"];
-    let pokemonHeight = pokemon["height"];
-    let pokemonImg = pokemon["sprites"]["front_shiny"];
 
-    const r = await axios.get(pokemon["species"]["url"]);
-    let pokemonDesc = await r.data;
-    console.log(pokemonDesc);
-    pokemonDesc = pokemonDesc["flavor_text_entries"][9]["flavor_text"];
-    pokedex = {
-        "name" : pokemonName, 
-        "img" : pokemonImg,
-        "desc" : pokemonDesc, 
-        "weight" : pokemonWeight,
-        "height" : pokemonHeight
-    };
-}
+
 
 
 

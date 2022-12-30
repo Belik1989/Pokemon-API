@@ -1,1 +1,16 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+#search-box {
+    font: inherit;
+    padding: 15px;
+    max-width: 320px;
+    margin-bottom: 13px;
+}
+
+#search-btn{
+    padding: 15px;
+    margin-bottom: 13px;
+}
+
+.pokemon-box{
+    display: flex;
+}
